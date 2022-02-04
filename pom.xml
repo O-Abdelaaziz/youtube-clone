@@ -20,7 +20,9 @@
 
     <modules>
         <module>backend</module>
+        <module>frontend</module>
     </modules>
+
     <properties>
         <maven.compiler.source>15</maven.compiler.source>
         <maven.compiler.target>15</maven.compiler.target>
