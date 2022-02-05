@@ -30,7 +30,7 @@ public class S3ServiceImpl implements IFileService {
     @Override
     public String uploadFile(MultipartFile multipartFile) {
         String fileNameExtension = StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
-        String key = UUID.randomUUID().toString() + fileNameExtension;
+        String key = UUID.randomUUID().toString() + "." + fileNameExtension;
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentLength(multipartFile.getSize());
         metadata.setContentType(multipartFile.getContentType());
