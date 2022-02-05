@@ -33,9 +33,7 @@ public class VideoServiceImpl implements IVideoService {
 
     @Override
     public VideoRequest updateVideo(VideoRequest videoRequest) {
-        Video getVideo = videoRepository.findById(
-                        videoRequest.getId())
-                .orElseThrow(() -> new IllegalArgumentException("Cannot find video by id - " + videoRequest.getId()));
+        Video getVideo = getVideoById(videoRequest.getId());
         getVideo.setTitle(videoRequest.getTitle());
         getVideo.setDescription(videoRequest.getDescription());
         getVideo.setTags(videoRequest.getTags());
@@ -44,5 +42,20 @@ public class VideoServiceImpl implements IVideoService {
         getVideo.setThumbnailUrl(videoRequest.getThumbnailUrl());
         videoRepository.save(getVideo);
         return videoRequest;
+    }
+
+    @Override
+    public String uploadThumbnail(MultipartFile file, String videoId) {
+        Video getVideo = getVideoById(videoId);
+        String thumbnailUrl = is3Service.uploadFile(file);
+        getVideo.setThumbnailUrl(thumbnailUrl);
+        videoRepository.save(getVideo);
+        return thumbnailUrl;
+    }
+
+    @Override
+    public Video getVideoById(String videoId) {
+        return videoRepository.findById(videoId)
+                .orElseThrow(() -> new IllegalArgumentException("Cannot find video by id - " + videoId));
     }
 }
