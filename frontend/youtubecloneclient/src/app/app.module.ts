@@ -12,9 +12,10 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import { HeaderComponent } from './components/header/header.component';
+import { SaveVideoDetailsComponent } from './components/save-video-details/save-video-details.component';
 
 @NgModule({
-  declarations: [AppComponent, UploadVideoComponent, HeaderComponent],
+  declarations: [AppComponent, UploadVideoComponent, HeaderComponent, SaveVideoDetailsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
