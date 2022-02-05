@@ -2,11 +2,12 @@ package com.youtubeclone.server.service;
 
 import com.youtubeclone.server.model.Video;
 import com.youtubeclone.server.payload.request.VideoRequest;
+import com.youtubeclone.server.payload.response.VideoResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface IVideoService {
 
-    public void uploadVideo(MultipartFile multipartFile);
+    public VideoResponse uploadVideo(MultipartFile multipartFile);
 
     public VideoRequest updateVideo(VideoRequest videoRequest);
 

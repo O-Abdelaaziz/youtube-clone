@@ -1,6 +1,7 @@
 package com.youtubeclone.server.controller;
 
 import com.youtubeclone.server.payload.request.VideoRequest;
+import com.youtubeclone.server.payload.response.VideoResponse;
 import com.youtubeclone.server.service.IVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,14 +21,14 @@ public class VideoController {
 
     @PostMapping("/upload-video")
     @ResponseStatus(HttpStatus.CREATED)
-    public void uploadVideo(@RequestParam(value = "file") MultipartFile file) {
-        iVideoService.uploadVideo(file);
+    public VideoResponse uploadVideo(@RequestParam(value = "file") MultipartFile file) {
+        return iVideoService.uploadVideo(file);
     }
 
     @PostMapping("/upload-thumbnail")
     @ResponseStatus(HttpStatus.CREATED)
     public String uploadThumbnail(@RequestParam(value = "file") MultipartFile file, @RequestParam("videoId") String videoId) {
-         return iVideoService.uploadThumbnail(file,videoId);
+        return iVideoService.uploadThumbnail(file, videoId);
     }
 
     @PutMapping("/update-video")

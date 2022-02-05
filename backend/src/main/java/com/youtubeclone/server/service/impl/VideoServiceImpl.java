@@ -2,6 +2,7 @@ package com.youtubeclone.server.service.impl;
 
 import com.youtubeclone.server.model.Video;
 import com.youtubeclone.server.payload.request.VideoRequest;
+import com.youtubeclone.server.payload.response.VideoResponse;
 import com.youtubeclone.server.repository.VideoRepository;
 import com.youtubeclone.server.service.IFileService;
 import com.youtubeclone.server.service.IVideoService;
@@ -24,11 +25,15 @@ public class VideoServiceImpl implements IVideoService {
     }
 
     @Override
-    public void uploadVideo(MultipartFile multipartFile) {
+    public VideoResponse uploadVideo(MultipartFile multipartFile) {
         String videoUrl = is3Service.uploadFile(multipartFile);
         Video video = new Video();
         video.setVideoUrl(videoUrl);
         videoRepository.save(video);
+        VideoResponse videoResponse = new VideoResponse();
+        videoResponse.setVideoId(video.getId());
+        videoResponse.setVideoUrl(videoUrl);
+        return videoResponse;
     }
 
     @Override
