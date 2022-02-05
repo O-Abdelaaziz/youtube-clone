@@ -13,6 +13,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import { HeaderComponent } from './components/header/header.component';
 import { SaveVideoDetailsComponent } from './components/save-video-details/save-video-details.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [AppComponent, UploadVideoComponent, HeaderComponent, SaveVideoDetailsComponent],
@@ -26,6 +27,7 @@ import { SaveVideoDetailsComponent } from './components/save-video-details/save-
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
+    FlexLayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
