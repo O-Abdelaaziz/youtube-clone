@@ -4,7 +4,7 @@
 
 <div fxFlex="30%">
   <div class="mat-title">Add Video Metadata</div>
-  <form [formGroup]="videoDetailsFrom">
+  <form [formGroup]="videoDetailsFrom" (ngSubmit)="onSaveVideoDetails()">
     <p>
       <mat-form-field appearance="outline">
         <mat-label>Title:</mat-label>
@@ -14,19 +14,39 @@
     </p>
     <p>
       <mat-form-field appearance="outline">
-        <mat-label>Description</mat-label>
+        <mat-label>Description:</mat-label>
         <input matInput formControlName="title" placeholder="Placeholder">
         <mat-hint>Hint</mat-hint>
       </mat-form-field>
     </p>
     <p>
       <mat-form-field appearance="fill">
-        <mat-label>Status</mat-label>
+        <mat-label>Status:</mat-label>
         <mat-select formControlName="videoStatus" >
           <mat-option value="Public">Public</mat-option>
           <mat-option value="Private">Private</mat-option>
         </mat-select>
       </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field class="example-chip-list" appearance="fill">
+        <mat-label>Tags:</mat-label>
+        <mat-chip-list #chipList aria-label="Tag selection">
+          <mat-chip *ngFor="let tag of tags" [selectable]="selectable"
+                   [removable]="removable" (removed)="remove(tag)">
+            {{tag}}
+            <button matChipRemove *ngIf="removable">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+          <input placeholder="New tag..."
+                 [matChipInputFor]="chipList"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="addOnBlur"
+                 (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+      </mat-form-field>
+
     </p>
     <p>
       <button type="submit" mat-raised-button color="primary">Save</button>

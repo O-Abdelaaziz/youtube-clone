@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatChipInputEvent } from '@angular/material/chips';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-save-video-details',
@@ -12,6 +14,11 @@ export class SaveVideoDetailsComponent implements OnInit {
     description: new FormControl(''),
     videoStatus: new FormControl(''),
   });
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  tags: string[] = [];
 
   constructor(private _formBuilder: FormBuilder) {}
 
@@ -21,5 +28,30 @@ export class SaveVideoDetailsComponent implements OnInit {
       description: [''],
       videoStatus: [''],
     });
+  }
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    // Add our fruit
+    if (value) {
+      this.tags.push(value);
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
+  }
+
+  remove(tag: string): void {
+    const index = this.tags.indexOf(tag);
+
+    if (index >= 0) {
+      this.tags.splice(index, 1);
+    }
+  }
+
+  public onSaveVideoDetails(){
+    console.log("from submitted");
+
   }
 }
