@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   NgxFileDropEntry,
   FileSystemFileEntry,
@@ -16,7 +17,10 @@ export class UploadVideoComponent implements OnInit {
   public fileUploaded: boolean = false;
   public fileEntry: FileSystemFileEntry | undefined;
 
-  constructor(private _videoUploadService: VideoUploadService) {}
+  constructor(
+    private _videoUploadService: VideoUploadService,
+    private _router: Router
+  ) {}
 
   ngOnInit(): void {}
 
@@ -67,6 +71,7 @@ export class UploadVideoComponent implements OnInit {
       this.fileEntry.file((file) => {
         this._videoUploadService.uploadVideo(file).subscribe((response) => {
           console.log('Video uploaded successfully.');
+          this._router.navigateByUrl('/save-video-details/' + response.videoId);
         });
       });
     }
