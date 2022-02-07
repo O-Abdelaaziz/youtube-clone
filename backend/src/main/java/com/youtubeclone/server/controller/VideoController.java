@@ -3,6 +3,7 @@ package com.youtubeclone.server.controller;
 import com.youtubeclone.server.payload.request.VideoRequest;
 import com.youtubeclone.server.payload.response.VideoResponse;
 import com.youtubeclone.server.service.IVideoService;
+import com.youtubeclone.server.service.impl.LocalStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,22 +14,24 @@ import org.springframework.web.multipart.MultipartFile;
 public class VideoController {
 
     private IVideoService iVideoService;
+    private LocalStorageService localStorageService;
 
     @Autowired
-    public VideoController(IVideoService iVideoService) {
+    public VideoController(IVideoService iVideoService, LocalStorageService localStorageService) {
         this.iVideoService = iVideoService;
+        this.localStorageService = localStorageService;
     }
 
     @PostMapping("/upload-video")
     @ResponseStatus(HttpStatus.CREATED)
     public VideoResponse uploadVideo(@RequestParam(value = "file") MultipartFile file) {
-        return iVideoService.uploadVideo(file);
+        return localStorageService.uploadVideo(file);
     }
 
     @PostMapping("/upload-thumbnail")
     @ResponseStatus(HttpStatus.CREATED)
     public String uploadThumbnail(@RequestParam(value = "file") MultipartFile file, @RequestParam("videoId") String videoId) {
-        return iVideoService.uploadThumbnail(file, videoId);
+        return localStorageService.uploadThumbnail(file, videoId);
     }
 
     @PutMapping("/update-video")

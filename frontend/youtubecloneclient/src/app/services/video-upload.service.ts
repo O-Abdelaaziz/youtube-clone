@@ -11,12 +11,25 @@ export class VideoUploadService {
   private baseUrl: string = environment.baseUrl;
   constructor(private _httpClient: HttpClient) {}
 
-  public uploadVideo(fileEntry: File): Observable<UploadVideoResponse> {
+  public uploadVideo(videoFile: File): Observable<UploadVideoResponse> {
     const formData = new FormData();
-    formData.append('file', fileEntry, fileEntry.name);
+    formData.append('file', videoFile, videoFile.name);
     return this._httpClient.post<UploadVideoResponse>(
       `${this.baseUrl}/videos/upload-video`,
       formData
+    );
+  }
+
+  public uploadThumbnail(thumbnailFile: File, videoId : string): Observable<string> {
+    const formData = new FormData();
+    formData.append('file', thumbnailFile, thumbnailFile.name);
+    formData.append('videoId', videoId);
+    return this._httpClient.post(
+      `${this.baseUrl}/videos/upload-thumbnail`,
+      formData,
+      {
+        responseType:'text'
+      }
     );
   }
 }

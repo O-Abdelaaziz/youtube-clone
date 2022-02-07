@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { ActivatedRoute } from '@angular/router';
+import { VideoUploadService } from 'src/app/services/video-upload.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-save-video-details',
@@ -14,13 +17,27 @@ export class SaveVideoDetailsComponent implements OnInit {
     description: new FormControl(''),
     videoStatus: new FormControl(''),
   });
-  selectable = true;
-  removable = true;
-  addOnBlur = true;
+  public selectable = true;
+  public removable = true;
+  public addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  tags: string[] = [];
+  public tags: string[] = [];
 
-  constructor(private _formBuilder: FormBuilder) {}
+  public selectedFile?: File;
+  public selectedFileName: string = '';
+  public selectedFilePath: string | undefined;
+  public isFileSelected: boolean = false;
+  public message: string = '';
+  public videoId: string = '';
+
+  constructor(
+    private _videoUploadService: VideoUploadService,
+    private _snackBar: MatSnackBar,
+    private _formBuilder: FormBuilder,
+    private _activatedRoute: ActivatedRoute
+  ) {
+    this.videoId = this._activatedRoute.snapshot.params['id'];
+  }
 
   ngOnInit(): void {
     this.videoDetailsFrom = this._formBuilder.group({
@@ -50,8 +67,49 @@ export class SaveVideoDetailsComponent implements OnInit {
     }
   }
 
-  public onSaveVideoDetails(){
-    console.log("from submitted");
+  public onSaveVideoDetails() {
+    console.log('from submitted');
+  }
 
+  onFileSelected($event: Event) {
+    const input = $event.target as HTMLInputElement;
+    if (!input.files?.length) {
+      return;
+    }
+
+    const file = input.files[0];
+    var mimeType = file.type;
+    if (mimeType.match(/image\/*/) == null) {
+      this.message = 'Only images are supported.';
+      return;
+    }
+    this.selectedFile = file;
+    this.selectedFileName = file.name;
+    this.previewImage($event);
+    this.isFileSelected = true;
+  }
+
+  onUpload() {
+    this._videoUploadService
+      .uploadThumbnail(this.selectedFile!, this.videoId)
+      .subscribe((response) => {
+        console.log('show an upload success notification');
+        this.openSnackBar('The thumbnail uploaded successfully.', 'OK');
+      });
+  }
+
+  previewImage(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = (e: any) => {
+        this.selectedFilePath = e.target.result;
+        this.message = '';
+      };
+    }
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
 }
