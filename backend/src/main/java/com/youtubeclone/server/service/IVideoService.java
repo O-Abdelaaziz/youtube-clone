@@ -14,4 +14,6 @@ public interface IVideoService {
     public String uploadThumbnail(MultipartFile file, String videoId);
 
     public Video getVideoById(String videoId);
+
+    public VideoRequest getVideoDetails(String videoId);
 }

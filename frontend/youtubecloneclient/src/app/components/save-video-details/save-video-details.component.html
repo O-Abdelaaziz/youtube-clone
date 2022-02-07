@@ -64,7 +64,10 @@
             <span style="color:red;" *ngIf="message">{{message}}</span>
           </p>
           <hr>
-          <button mat-raised-button color="primary" type="submit" (click)="onUpload()">Upload</button>
+          <div>
+            <button mat-raised-button color="primary" type="submit" (click)="onUpload()">Upload</button>
+            <button mat-raised-button color="warn" type="submit" (click)="OnRemoveImage()">Remove</button>
+          </div>
         </div>
 
       </label>
@@ -76,7 +79,7 @@
 </div>
 
 <div fxFlex="30%">
-  Video Player
+  <app-video-player [videoUrl]="videoUrl"></app-video-player>
 </div>
 
 <div fxFlex="20%">

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UploadVideoResponse } from '../models/upload-video-response';
+import { VideoDto } from '../models/video-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,10 @@ export class VideoUploadService {
     );
   }
 
-  public uploadThumbnail(thumbnailFile: File, videoId : string): Observable<string> {
+  public uploadThumbnail(
+    thumbnailFile: File,
+    videoId: string
+  ): Observable<string> {
     const formData = new FormData();
     formData.append('file', thumbnailFile, thumbnailFile.name);
     formData.append('videoId', videoId);
@@ -28,8 +32,12 @@ export class VideoUploadService {
       `${this.baseUrl}/videos/upload-thumbnail`,
       formData,
       {
-        responseType:'text'
+        responseType: 'text',
       }
     );
+  }
+
+  public getVideoDetails(videoId: string): Observable<VideoDto> {
+    return this._httpClient.get<VideoDto>(`${this.baseUrl}/videos/${videoId}`);
   }
 }

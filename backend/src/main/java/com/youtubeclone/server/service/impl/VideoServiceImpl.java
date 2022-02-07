@@ -63,4 +63,19 @@ public class VideoServiceImpl implements IVideoService {
         return videoRepository.findById(videoId)
                 .orElseThrow(() -> new IllegalArgumentException("Cannot find video by id - " + videoId));
     }
+
+    @Override
+    public VideoRequest getVideoDetails(String videoId) {
+        Video getVideo = getVideoById(videoId);
+        VideoRequest videoRequest = new VideoRequest();
+        videoRequest.setId(getVideo.getId());
+        videoRequest.setTitle(getVideo.getTitle());
+        videoRequest.setDescription(getVideo.getDescription());
+        videoRequest.setTags(getVideo.getTags());
+        videoRequest.setVideoStatus(getVideo.getVideoStatus());
+        videoRequest.setVideoUrl( getVideo.getVideoUrl());
+        videoRequest.setThumbnailUrl(getVideo.getThumbnailUrl());
+        return videoRequest;
+    }
+
 }

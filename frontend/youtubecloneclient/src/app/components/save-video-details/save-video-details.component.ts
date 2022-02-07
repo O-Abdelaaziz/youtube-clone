@@ -29,6 +29,7 @@ export class SaveVideoDetailsComponent implements OnInit {
   public isFileSelected: boolean = false;
   public message: string = '';
   public videoId: string = '';
+  public videoUrl: string = '';
 
   constructor(
     private _videoUploadService: VideoUploadService,
@@ -45,8 +46,19 @@ export class SaveVideoDetailsComponent implements OnInit {
       description: [''],
       videoStatus: [''],
     });
+
+    this.onGetVideoDetails();
   }
 
+  onGetVideoDetails() {
+    this._videoUploadService
+      .getVideoDetails(this.videoId)
+      .subscribe((response) => {
+        this.videoUrl = response.videoUrl;
+        console.log(this.videoUrl);
+
+      });
+  }
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
@@ -107,6 +119,13 @@ export class SaveVideoDetailsComponent implements OnInit {
         this.message = '';
       };
     }
+  }
+
+  OnRemoveImage() {
+    this.selectedFile = undefined;
+    this.selectedFileName = '';
+    this.selectedFilePath = '';
+    this.isFileSelected = false;
   }
 
   openSnackBar(message: string, action: string) {

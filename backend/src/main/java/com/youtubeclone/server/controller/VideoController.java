@@ -39,4 +39,11 @@ public class VideoController {
     public VideoRequest updateVideoDetails(@RequestBody VideoRequest videoRequest) {
         return iVideoService.updateVideo(videoRequest);
     }
+
+    @GetMapping("/{videoId}")
+    @ResponseStatus(HttpStatus.OK)
+    public VideoRequest getVideoDetails(@PathVariable(value = "videoId") String videoId) {
+        return iVideoService.getVideoDetails(videoId);
+    }
+
 }
