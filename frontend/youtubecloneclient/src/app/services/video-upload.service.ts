@@ -40,4 +40,8 @@ export class VideoUploadService {
   public getVideoDetails(videoId: string): Observable<VideoDto> {
     return this._httpClient.get<VideoDto>(`${this.baseUrl}/videos/${videoId}`);
   }
+
+  public saveVideoDetails(videoDto :VideoDto): Observable<VideoDto> {
+    return this._httpClient.put<VideoDto>(`${this.baseUrl}/videos/update-video`,videoDto);
+  }
 }

@@ -15,7 +15,7 @@
     <p>
       <mat-form-field appearance="outline">
         <mat-label>Description:</mat-label>
-        <input matInput formControlName="title" placeholder="Placeholder">
+        <input matInput formControlName="description" placeholder="Placeholder">
         <mat-hint>Hint</mat-hint>
       </mat-form-field>
     </p>
@@ -23,8 +23,9 @@
       <mat-form-field appearance="fill">
         <mat-label>Status:</mat-label>
         <mat-select formControlName="videoStatus" >
-          <mat-option value="Public">Public</mat-option>
-          <mat-option value="Private">Private</mat-option>
+          <mat-option value="PUBLIC">Public</mat-option>
+          <mat-option value="PRIVATE">Private</mat-option>
+          <mat-option value="UNLISTED">Unlisted</mat-option>
         </mat-select>
       </mat-form-field>
     </p>
@@ -65,8 +66,8 @@
           </p>
           <hr>
           <div>
-            <button mat-raised-button color="primary" type="submit" (click)="onUpload()">Upload</button>
-            <button mat-raised-button color="warn" type="submit" (click)="OnRemoveImage()">Remove</button>
+            <button mat-raised-button color="primary" type="button" (click)="onUpload()">Upload</button>
+            <button mat-raised-button color="warn" type="button" (click)="OnRemoveImage()">Remove</button>
           </div>
         </div>
 

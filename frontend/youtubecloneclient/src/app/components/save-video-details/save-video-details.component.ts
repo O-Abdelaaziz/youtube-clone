@@ -1,10 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+} from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ActivatedRoute } from '@angular/router';
 import { VideoUploadService } from 'src/app/services/video-upload.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { VideoDto } from 'src/app/models/video-dto';
 
 @Component({
   selector: 'app-save-video-details',
@@ -30,6 +36,7 @@ export class SaveVideoDetailsComponent implements OnInit {
   public message: string = '';
   public videoId: string = '';
   public videoUrl: string = '';
+  public thumbnailUrl:string='';
 
   constructor(
     private _videoUploadService: VideoUploadService,
@@ -55,8 +62,7 @@ export class SaveVideoDetailsComponent implements OnInit {
       .getVideoDetails(this.videoId)
       .subscribe((response) => {
         this.videoUrl = response.videoUrl;
-        console.log(this.videoUrl);
-
+        this.thumbnailUrl=response.thumbnailUrl;
       });
   }
   add(event: MatChipInputEvent): void {
@@ -79,8 +85,26 @@ export class SaveVideoDetailsComponent implements OnInit {
     }
   }
 
+  get videoDetailsFromControls(): { [key: string]: AbstractControl } {
+    return this.videoDetailsFrom.controls;
+  }
+
   public onSaveVideoDetails() {
-    console.log('from submitted');
+    const videoMetaData: VideoDto = {
+      id: this.videoId,
+      title: this.videoDetailsFromControls?.['title'].value,
+      description: this.videoDetailsFromControls?.['description'].value,
+      videoStatus: this.videoDetailsFromControls?.['videoStatus'].value,
+      videoUrl:this.videoUrl,
+      thumbnailUrl:this.thumbnailUrl,
+      tags: this.tags,
+    };
+
+    this._videoUploadService.saveVideoDetails(videoMetaData).subscribe(
+      (response)=>{
+        this.openSnackBar("Video details updated successfully","OK");
+      }
+    )
   }
 
   onFileSelected($event: Event) {
