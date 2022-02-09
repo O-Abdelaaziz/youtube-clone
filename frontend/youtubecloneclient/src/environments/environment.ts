@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl:'http://localhost:8090/api',
+  baseUrl:'http://localhost:8090',
   env: {
     CLIENT_ID: process.env["NG_APP_CLIENT_ID"],
   },

@@ -13,7 +13,7 @@
         <mat-icon>login</mat-icon>
       </button>
     </ng-template>
-    <button mat-icon-button class="example-icon" *ngIf="isAuthenticated" (click)="onLogout()"  >
+    <button mat-icon-button class="example-icon" (click)="onLogout()" *ngIf="isAuthenticated" >
       <mat-icon>logout</mat-icon>
     </button>
   </mat-toolbar-row>
