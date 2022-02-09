@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "~13.0.0",
     "@angular/router": "~13.0.0",
     "@videogular/ngx-videogular": "^5.0.1",
+    "angular-auth-oidc-client": "13.1.0",
     "ngx-file-drop": "^13.0.0",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
