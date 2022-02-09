@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
         redirectUrl: window.location.origin,
         postLogoutRedirectUri: window.location.origin,
         clientId: environment.env.CLIENT_ID,
-        scope: 'openid profile offline_access',
+        scope: 'openid profile offline_access email',
         responseType: 'code',
         silentRenew: true,
         useRefreshToken: true,
