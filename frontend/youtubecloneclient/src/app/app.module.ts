@@ -30,6 +30,7 @@ import { VideoPlayerComponent } from './components/video-player/video-player.com
 import { AuthConfigModule } from './auth/auth-config.module';
 import { AuthInterceptor, AuthModule } from 'angular-auth-oidc-client';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { VideoDetailsComponent } from './components/video-details/video-details.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
     SaveVideoDetailsComponent,
     VideoPlayerComponent,
     UnauthorizedComponent,
+    VideoDetailsComponent,
   ],
   imports: [
     BrowserModule,
