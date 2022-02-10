@@ -3,6 +3,7 @@ package com.youtubeclone.server.service.impl;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.youtubeclone.server.model.User;
+import com.youtubeclone.server.model.Video;
 import com.youtubeclone.server.payload.request.UserInfoRequest;
 import com.youtubeclone.server.repository.UserRepository;
 import com.youtubeclone.server.service.IUserService;
@@ -119,6 +120,13 @@ public class UserServiceImpl implements IUserService {
     public void addToDisLikedVideos(String videoId) {
         User currentUser = getCurrentUser();
         currentUser.addToDisLikedVideos(videoId);
+        userRepository.save(currentUser);
+    }
+
+    @Override
+    public void addVideoToHistory(String videoId) {
+        User currentUser = getCurrentUser();
+        currentUser.addVideoToHistory(videoId);
         userRepository.save(currentUser);
     }
 }

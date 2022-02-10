@@ -48,4 +48,8 @@ public class User {
     public void addToDisLikedVideos(String videoId) {
         disLikedVideos.add(videoId);
     }
+
+    public void addVideoToHistory(String videoId) {
+        videoHistory.add(videoId);
+    }
 }

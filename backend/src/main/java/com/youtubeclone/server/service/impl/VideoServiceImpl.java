@@ -70,7 +70,10 @@ public class VideoServiceImpl implements IVideoService {
     @Override
     public VideoRequest getVideoDetails(String videoId) {
         Video getVideo = getVideoById(videoId);
+
         increaseVideoViewCount(getVideo);
+        iUserService.addVideoToHistory(videoId);
+
         VideoRequest videoRequest = new VideoRequest();
         videoRequest.setId(getVideo.getId());
         videoRequest.setTitle(getVideo.getTitle());

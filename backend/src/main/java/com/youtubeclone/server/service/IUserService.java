@@ -1,6 +1,7 @@
 package com.youtubeclone.server.service;
 
 import com.youtubeclone.server.model.User;
+import com.youtubeclone.server.model.Video;
 
 public interface IUserService {
 
@@ -19,4 +20,6 @@ public interface IUserService {
     public void removeFromDisLikedVideos(String videoId);
 
     public void addToDisLikedVideos(String videoId);
+
+    public void addVideoToHistory(String videoId);
 }
