@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Transactional
 public class VideoServiceImpl implements IVideoService {
@@ -139,6 +142,21 @@ public class VideoServiceImpl implements IVideoService {
         comment.setAuthor(commentRequest.getCommentAuthor());
         video.addComments(comment);
         videoRepository.save(video);
+    }
+
+    @Override
+    public List<CommentRequest> getAllComments(String videoId) {
+        Video video = getVideoById(videoId);
+        List<Comment> commentList = video.getComments();
+        return commentList.stream().map(this::mapToCommentRequest)
+                .collect(Collectors.toList());
+    }
+
+    private CommentRequest mapToCommentRequest(Comment comment) {
+        CommentRequest commentRequest = new CommentRequest();
+        commentRequest.setCommentText(comment.getText());
+        commentRequest.setCommentAuthor(comment.getAuthor());
+        return commentRequest;
     }
 
     private VideoRequest mapToVideoRequest(Video getVideo) {

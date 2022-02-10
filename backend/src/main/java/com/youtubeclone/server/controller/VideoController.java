@@ -1,5 +1,6 @@
 package com.youtubeclone.server.controller;
 
+import com.youtubeclone.server.model.Comment;
 import com.youtubeclone.server.payload.request.CommentRequest;
 import com.youtubeclone.server.payload.request.VideoRequest;
 import com.youtubeclone.server.payload.response.VideoResponse;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/videos")
@@ -64,4 +67,11 @@ public class VideoController {
     public void addComment(@PathVariable("videoId") String videoId, @RequestBody CommentRequest commentRequest) {
         iVideoService.addComment(videoId, commentRequest);
     }
+
+    @GetMapping("/{videoId}/comment")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CommentRequest> listComments(@PathVariable("videoId") String videoId) {
+        return iVideoService.getAllComments(videoId);
+    }
+
 }

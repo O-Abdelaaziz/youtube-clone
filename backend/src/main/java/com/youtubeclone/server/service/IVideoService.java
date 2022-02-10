@@ -1,10 +1,13 @@
 package com.youtubeclone.server.service;
 
+import com.youtubeclone.server.model.Comment;
 import com.youtubeclone.server.model.Video;
 import com.youtubeclone.server.payload.request.CommentRequest;
 import com.youtubeclone.server.payload.request.VideoRequest;
 import com.youtubeclone.server.payload.response.VideoResponse;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 public interface IVideoService {
 
@@ -23,4 +26,6 @@ public interface IVideoService {
     public VideoRequest disLikeVideo(String videoId);
 
     public void addComment(String videoId, CommentRequest commentRequest);
+
+    public List<CommentRequest> getAllComments(String videoId);
 }
