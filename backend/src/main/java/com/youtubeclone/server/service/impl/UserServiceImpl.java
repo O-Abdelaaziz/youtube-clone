@@ -18,6 +18,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Set;
 
 
 @Transactional
@@ -135,8 +136,7 @@ public class UserServiceImpl implements IUserService {
         User currentUser = getCurrentUser();
         currentUser.addToSubscribedUsers(userId);
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("Connot find user with id " + userId));
+        User user = getUserById(userId);
         user.addSubscribers(currentUser.getId());
         userRepository.save(currentUser);
         userRepository.save(user);
@@ -147,10 +147,20 @@ public class UserServiceImpl implements IUserService {
         User currentUser = getCurrentUser();
         currentUser.removeFromSubscribeTo(userId);
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("Connot find user with id " + userId));
+        User user = getUserById(userId);
         user.removeSubscribers(currentUser.getId());
         userRepository.save(currentUser);
         userRepository.save(user);
+    }
+
+    @Override
+    public Set<String> userHistory(String userId) {
+        User user = getUserById(userId);
+        return user.getVideoHistory();
+    }
+
+    private User getUserById(String userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Connot find user with id " + userId));
     }
 }

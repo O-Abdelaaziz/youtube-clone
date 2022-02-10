@@ -2,6 +2,8 @@ package com.youtubeclone.server.service;
 
 import com.youtubeclone.server.model.User;
 
+import java.util.Set;
+
 public interface IUserService {
 
     public void registerUser(String tokenValue);
@@ -25,4 +27,6 @@ public interface IUserService {
     public void subscribeUser(String userId);
 
     public void unSubscribeUser(String userId);
+
+    public Set<String> userHistory(String userId);
 }
