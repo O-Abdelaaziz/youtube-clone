@@ -152,6 +152,13 @@ public class VideoServiceImpl implements IVideoService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<VideoRequest> getAllVideos() {
+        return videoRepository.findAll().stream().map(
+                this::mapToVideoRequest
+        ).collect(Collectors.toList());
+    }
+
     private CommentRequest mapToCommentRequest(Comment comment) {
         CommentRequest commentRequest = new CommentRequest();
         commentRequest.setCommentText(comment.getText());

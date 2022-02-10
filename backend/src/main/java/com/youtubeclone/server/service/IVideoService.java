@@ -28,4 +28,6 @@ public interface IVideoService {
     public void addComment(String videoId, CommentRequest commentRequest);
 
     public List<CommentRequest> getAllComments(String videoId);
+
+    public List<VideoRequest> getAllVideos();
 }
