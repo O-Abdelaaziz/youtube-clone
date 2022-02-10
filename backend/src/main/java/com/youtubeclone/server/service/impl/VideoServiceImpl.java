@@ -74,14 +74,7 @@ public class VideoServiceImpl implements IVideoService {
         increaseVideoViewCount(getVideo);
         iUserService.addVideoToHistory(videoId);
 
-        VideoRequest videoRequest = new VideoRequest();
-        videoRequest.setId(getVideo.getId());
-        videoRequest.setTitle(getVideo.getTitle());
-        videoRequest.setDescription(getVideo.getDescription());
-        videoRequest.setTags(getVideo.getTags());
-        videoRequest.setVideoStatus(getVideo.getVideoStatus());
-        videoRequest.setVideoUrl(getVideo.getVideoUrl());
-        videoRequest.setThumbnailUrl(getVideo.getThumbnailUrl());
+        VideoRequest videoRequest = mapToVideoRequest(getVideo);
         return videoRequest;
     }
 
@@ -90,11 +83,6 @@ public class VideoServiceImpl implements IVideoService {
         videoRepository.save(getVideo);
     }
 
-    /**
-     * incerement like count
-     * if user already liked the video, then decrement like count
-     * if user already disliked the video, then increment like count and decrement dislike count
-     */
     @Override
     public VideoRequest likeVideo(String videoId) {
         Video getVideo = getVideoById(videoId);
@@ -114,16 +102,7 @@ public class VideoServiceImpl implements IVideoService {
 
         videoRepository.save(getVideo);
 
-        VideoRequest videoRequest = new VideoRequest();
-        videoRequest.setId(getVideo.getId());
-        videoRequest.setTitle(getVideo.getTitle());
-        videoRequest.setDescription(getVideo.getDescription());
-        videoRequest.setTags(getVideo.getTags());
-        videoRequest.setVideoStatus(getVideo.getVideoStatus());
-        videoRequest.setVideoUrl(getVideo.getVideoUrl());
-        videoRequest.setThumbnailUrl(getVideo.getThumbnailUrl());
-        videoRequest.setLikedCount(getVideo.getLikes().get());
-        videoRequest.setDisLikedCount(getVideo.getDisLikes().get());
+        VideoRequest videoRequest = mapToVideoRequest(getVideo);
         return videoRequest;
     }
 
@@ -146,6 +125,11 @@ public class VideoServiceImpl implements IVideoService {
 
         videoRepository.save(getVideo);
 
+        VideoRequest videoRequest = mapToVideoRequest(getVideo);
+        return videoRequest;
+    }
+
+    private VideoRequest mapToVideoRequest(Video getVideo) {
         VideoRequest videoRequest = new VideoRequest();
         videoRequest.setId(getVideo.getId());
         videoRequest.setTitle(getVideo.getTitle());
@@ -156,8 +140,14 @@ public class VideoServiceImpl implements IVideoService {
         videoRequest.setThumbnailUrl(getVideo.getThumbnailUrl());
         videoRequest.setLikedCount(getVideo.getLikes().get());
         videoRequest.setDisLikedCount(getVideo.getDisLikes().get());
+        videoRequest.setViewCount(getVideo.getViewCount().get());
         return videoRequest;
     }
 
-
+    /**
+     * likeVideo
+     * incerement like count
+     * if user already liked the video, then decrement like count
+     * if user already disliked the video, then increment like count and decrement dislike count
+     */
 }

@@ -20,4 +20,5 @@ public class VideoRequest {
     private String thumbnailUrl;
     private Integer likedCount;
     private Integer disLikedCount;
+    private Integer viewCount;
 }
