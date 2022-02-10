@@ -16,4 +16,6 @@ public interface IVideoService {
     public Video getVideoById(String videoId);
 
     public VideoRequest getVideoDetails(String videoId);
+
+    public VideoRequest likeVideo(String videoId);
 }

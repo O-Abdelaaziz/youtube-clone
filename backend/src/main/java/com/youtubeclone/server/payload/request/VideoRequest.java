@@ -4,6 +4,7 @@ import com.youtubeclone.server.enums.VideoStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.util.Set;
 
 @Data
@@ -17,4 +18,6 @@ public class VideoRequest {
     private String videoUrl;
     private VideoStatus videoStatus;
     private String thumbnailUrl;
+    private Integer likedCount;
+    private Integer disLikedCount;
 }

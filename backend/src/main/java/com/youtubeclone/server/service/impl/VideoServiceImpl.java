@@ -5,6 +5,7 @@ import com.youtubeclone.server.payload.request.VideoRequest;
 import com.youtubeclone.server.payload.response.VideoResponse;
 import com.youtubeclone.server.repository.VideoRepository;
 import com.youtubeclone.server.service.IFileService;
+import com.youtubeclone.server.service.IUserService;
 import com.youtubeclone.server.service.IVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,13 @@ public class VideoServiceImpl implements IVideoService {
 
     private VideoRepository videoRepository;
     private IFileService is3Service;
+    private IUserService iUserService;
 
     @Autowired
-    public VideoServiceImpl(VideoRepository videoRepository, IFileService is3Service) {
+    public VideoServiceImpl(VideoRepository videoRepository, IFileService is3Service, IUserService iUserService) {
         this.videoRepository = videoRepository;
         this.is3Service = is3Service;
+        this.iUserService = iUserService;
     }
 
     @Override
@@ -73,9 +76,47 @@ public class VideoServiceImpl implements IVideoService {
         videoRequest.setDescription(getVideo.getDescription());
         videoRequest.setTags(getVideo.getTags());
         videoRequest.setVideoStatus(getVideo.getVideoStatus());
-        videoRequest.setVideoUrl( getVideo.getVideoUrl());
+        videoRequest.setVideoUrl(getVideo.getVideoUrl());
         videoRequest.setThumbnailUrl(getVideo.getThumbnailUrl());
         return videoRequest;
     }
+
+    /**
+     * incerement like count
+     * if user already liked the video, then decrement like count
+     * if user already disliked the video, then increment like count and decrement dislike count
+     */
+    @Override
+    public VideoRequest likeVideo(String videoId) {
+        Video getVideo = getVideoById(videoId);
+
+        if (iUserService.ifLikedVideo(videoId)) {
+            getVideo.decrementLikes();
+            iUserService.removeFromLikedVideos(videoId);
+        } else if (iUserService.ifDisLikedVideo(videoId)) {
+            getVideo.decrementDisLikes();
+            iUserService.removeFromDisLikedVideos(videoId);
+            getVideo.incrementLikes();
+            iUserService.addToLikedVideos(videoId);
+        } else {
+            getVideo.incrementLikes();
+            iUserService.addToLikedVideos(videoId);
+        }
+
+        videoRepository.save(getVideo);
+
+        VideoRequest videoRequest = new VideoRequest();
+        videoRequest.setId(getVideo.getId());
+        videoRequest.setTitle(getVideo.getTitle());
+        videoRequest.setDescription(getVideo.getDescription());
+        videoRequest.setTags(getVideo.getTags());
+        videoRequest.setVideoStatus(getVideo.getVideoStatus());
+        videoRequest.setVideoUrl(getVideo.getVideoUrl());
+        videoRequest.setThumbnailUrl(getVideo.getThumbnailUrl());
+        videoRequest.setLikedCount(getVideo.getLikes().get());
+        videoRequest.setDisLikedCount(getVideo.getDisLikes().get());
+        return videoRequest;
+    }
+
 
 }

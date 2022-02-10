@@ -8,6 +8,8 @@ import com.youtubeclone.server.repository.UserRepository;
 import com.youtubeclone.server.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,5 +67,51 @@ public class UserServiceImpl implements IUserService {
         } catch (Exception exception) {
             throw new RuntimeException("Exception occurred while registering user", exception);
         }
+    }
+
+    @Override
+    public User getCurrentUser() {
+        String sub = ((Jwt) (SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getClaim("sub");
+        return userRepository.findBySub(sub)
+                .orElseThrow(
+                        () -> new IllegalArgumentException("Cannot find user with sub" + sub)
+                );
+    }
+
+    @Override
+    public void addToLikedVideos(String videoId) {
+        User currentUser = getCurrentUser();
+        currentUser.addToLikedVideos(videoId);
+        userRepository.save(currentUser);
+    }
+
+    @Override
+    public boolean ifLikedVideo(String videoId) {
+        return getCurrentUser()
+                .getLikedVideos()
+                .stream()
+                .anyMatch(likedVideo -> likedVideo.equals(videoId));
+    }
+
+    @Override
+    public boolean ifDisLikedVideo(String videoId) {
+        return getCurrentUser()
+                .getDisLikedVideos()
+                .stream()
+                .anyMatch(disLikedVideo -> disLikedVideo.equals(videoId));
+    }
+
+    @Override
+    public void removeFromLikedVideos(String videoId) {
+        User currentUser = getCurrentUser();
+        currentUser.removeFromLikedVideos(videoId);
+        userRepository.save(currentUser);
+    }
+
+    @Override
+    public void removeFromDisLikedVideos(String videoId) {
+        User currentUser = getCurrentUser();
+        currentUser.removeFromDisLikedVideos(videoId);
+        userRepository.save(currentUser);
     }
 }

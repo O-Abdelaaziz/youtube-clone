@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,6 +29,19 @@ public class User {
     private Set<String> subscribedToUsers = new HashSet<>();
     private Set<String> subscribers = new HashSet<>();
     private Set<String> videoHistory = new LinkedHashSet<>();
-    private Set<String> likedVideos = new HashSet<>();
-    private Set<String> disLikedVideos = new HashSet<>();
+    private Set<String> likedVideos = ConcurrentHashMap.newKeySet();
+    private Set<String> disLikedVideos = ConcurrentHashMap.newKeySet();
+
+
+    public void addToLikedVideos(String videoId) {
+        likedVideos.add(videoId);
+    }
+
+    public void removeFromLikedVideos(String videoId) {
+        likedVideos.remove(videoId);
+    }
+
+    public void removeFromDisLikedVideos(String videoId) {
+        disLikedVideos.remove(videoId);
+    }
 }
