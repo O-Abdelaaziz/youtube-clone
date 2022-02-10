@@ -1,5 +1,6 @@
 package com.youtubeclone.server.controller;
 
+import com.youtubeclone.server.payload.request.CommentRequest;
 import com.youtubeclone.server.payload.request.VideoRequest;
 import com.youtubeclone.server.payload.response.VideoResponse;
 import com.youtubeclone.server.service.IVideoService;
@@ -47,12 +48,20 @@ public class VideoController {
     }
 
     @GetMapping("/{videoId}/like")
+    @ResponseStatus(HttpStatus.OK)
     public VideoRequest likeVideo(@PathVariable("videoId") String videoId) {
         return iVideoService.likeVideo(videoId);
     }
 
     @GetMapping("/{videoId}/dislike")
+    @ResponseStatus(HttpStatus.OK)
     public VideoRequest disLikeVideo(@PathVariable("videoId") String videoId) {
         return iVideoService.disLikeVideo(videoId);
+    }
+
+    @PostMapping("/{videoId}/comment")
+    @ResponseStatus(HttpStatus.OK)
+    public void addComment(@PathVariable("videoId") String videoId, @RequestBody CommentRequest commentRequest) {
+        iVideoService.addComment(videoId, commentRequest);
     }
 }

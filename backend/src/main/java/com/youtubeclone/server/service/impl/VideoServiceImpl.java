@@ -1,6 +1,8 @@
 package com.youtubeclone.server.service.impl;
 
+import com.youtubeclone.server.model.Comment;
 import com.youtubeclone.server.model.Video;
+import com.youtubeclone.server.payload.request.CommentRequest;
 import com.youtubeclone.server.payload.request.VideoRequest;
 import com.youtubeclone.server.payload.response.VideoResponse;
 import com.youtubeclone.server.repository.VideoRepository;
@@ -127,6 +129,16 @@ public class VideoServiceImpl implements IVideoService {
 
         VideoRequest videoRequest = mapToVideoRequest(getVideo);
         return videoRequest;
+    }
+
+    @Override
+    public void addComment(String videoId, CommentRequest commentRequest) {
+        Video video = getVideoById(videoId);
+        Comment comment = new Comment();
+        comment.setText(commentRequest.getCommentText());
+        comment.setAuthor(commentRequest.getCommentAuthor());
+        video.addComments(comment);
+        videoRepository.save(video);
     }
 
     private VideoRequest mapToVideoRequest(Video getVideo) {
