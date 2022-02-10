@@ -129,4 +129,28 @@ public class UserServiceImpl implements IUserService {
         currentUser.addVideoToHistory(videoId);
         userRepository.save(currentUser);
     }
+
+    @Override
+    public void subscribeUser(String userId) {
+        User currentUser = getCurrentUser();
+        currentUser.addToSubscribedUsers(userId);
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Connot find user with id " + userId));
+        user.addSubscribers(currentUser.getId());
+        userRepository.save(currentUser);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void unSubscribeUser(String userId) {
+        User currentUser = getCurrentUser();
+        currentUser.removeFromSubscribeTo(userId);
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Connot find user with id " + userId));
+        user.removeSubscribers(currentUser.getId());
+        userRepository.save(currentUser);
+        userRepository.save(user);
+    }
 }
