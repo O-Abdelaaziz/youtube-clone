@@ -18,4 +18,6 @@ public interface IVideoService {
     public VideoRequest getVideoDetails(String videoId);
 
     public VideoRequest likeVideo(String videoId);
+
+    public VideoRequest disLikeVideo(String videoId);
 }

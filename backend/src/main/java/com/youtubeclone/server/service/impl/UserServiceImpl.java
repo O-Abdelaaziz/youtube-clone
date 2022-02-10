@@ -114,4 +114,11 @@ public class UserServiceImpl implements IUserService {
         currentUser.removeFromDisLikedVideos(videoId);
         userRepository.save(currentUser);
     }
+
+    @Override
+    public void addToDisLikedVideos(String videoId) {
+        User currentUser = getCurrentUser();
+        currentUser.addToDisLikedVideos(videoId);
+        userRepository.save(currentUser);
+    }
 }

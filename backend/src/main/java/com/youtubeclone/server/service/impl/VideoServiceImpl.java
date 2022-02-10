@@ -118,5 +118,37 @@ public class VideoServiceImpl implements IVideoService {
         return videoRequest;
     }
 
+    @Override
+    public VideoRequest disLikeVideo(String videoId) {
+        Video getVideo = getVideoById(videoId);
+
+        if (iUserService.ifDisLikedVideo(videoId)) {
+            getVideo.decrementDisLikes();
+            iUserService.removeFromDisLikedVideos(videoId);
+        } else if (iUserService.ifLikedVideo(videoId)) {
+            getVideo.decrementLikes();
+            iUserService.removeFromLikedVideos(videoId);
+            getVideo.incrementDisLikes();
+            iUserService.addToDisLikedVideos(videoId);
+        } else {
+            getVideo.incrementDisLikes();
+            iUserService.addToDisLikedVideos(videoId);
+        }
+
+        videoRepository.save(getVideo);
+
+        VideoRequest videoRequest = new VideoRequest();
+        videoRequest.setId(getVideo.getId());
+        videoRequest.setTitle(getVideo.getTitle());
+        videoRequest.setDescription(getVideo.getDescription());
+        videoRequest.setTags(getVideo.getTags());
+        videoRequest.setVideoStatus(getVideo.getVideoStatus());
+        videoRequest.setVideoUrl(getVideo.getVideoUrl());
+        videoRequest.setThumbnailUrl(getVideo.getThumbnailUrl());
+        videoRequest.setLikedCount(getVideo.getLikes().get());
+        videoRequest.setDisLikedCount(getVideo.getDisLikes().get());
+        return videoRequest;
+    }
+
 
 }

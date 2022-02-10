@@ -46,8 +46,13 @@ public class VideoController {
         return iVideoService.getVideoDetails(videoId);
     }
 
-    @GetMapping("/{}")
+    @GetMapping("/{videoId}/like")
     public VideoRequest likeVideo(@PathVariable("videoId") String videoId) {
         return iVideoService.likeVideo(videoId);
+    }
+
+    @GetMapping("/{videoId}/dislike")
+    public VideoRequest disLikeVideo(@PathVariable("videoId") String videoId) {
+        return iVideoService.disLikeVideo(videoId);
     }
 }

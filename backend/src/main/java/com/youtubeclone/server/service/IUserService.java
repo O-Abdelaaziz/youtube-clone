@@ -17,4 +17,6 @@ public interface IUserService {
     public void removeFromLikedVideos(String videoId);
 
     public void removeFromDisLikedVideos(String videoId);
+
+    public void addToDisLikedVideos(String videoId);
 }

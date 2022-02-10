@@ -44,4 +44,8 @@ public class User {
     public void removeFromDisLikedVideos(String videoId) {
         disLikedVideos.remove(videoId);
     }
+
+    public void addToDisLikedVideos(String videoId) {
+        disLikedVideos.add(videoId);
+    }
 }
