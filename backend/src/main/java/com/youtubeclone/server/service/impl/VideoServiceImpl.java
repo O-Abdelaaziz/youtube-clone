@@ -70,6 +70,7 @@ public class VideoServiceImpl implements IVideoService {
     @Override
     public VideoRequest getVideoDetails(String videoId) {
         Video getVideo = getVideoById(videoId);
+        increaseVideoViewCount(getVideo);
         VideoRequest videoRequest = new VideoRequest();
         videoRequest.setId(getVideo.getId());
         videoRequest.setTitle(getVideo.getTitle());
@@ -79,6 +80,11 @@ public class VideoServiceImpl implements IVideoService {
         videoRequest.setVideoUrl(getVideo.getVideoUrl());
         videoRequest.setThumbnailUrl(getVideo.getThumbnailUrl());
         return videoRequest;
+    }
+
+    private void increaseVideoViewCount(Video getVideo) {
+        getVideo.incrementViewCount();
+        videoRepository.save(getVideo);
     }
 
     /**
