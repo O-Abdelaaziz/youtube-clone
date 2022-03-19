@@ -14,7 +14,9 @@ export class VideoDetailsComponent implements OnInit {
   videoDescription!: string;
   tags: Array<string> = [];
   videoAvailable: boolean = false;
-
+  likedCount: number = 0;
+  disLikedCount: number = 0;
+  viewCount: number = 0;
   constructor(
     private _videoUploadService: VideoUploadService,
     private _activatedRoute: ActivatedRoute
@@ -35,6 +37,9 @@ export class VideoDetailsComponent implements OnInit {
         this.videoDescription = response.description;
         this.tags = response.tags;
         this.videoAvailable = true;
+        this.likedCount = response.likedCount;
+        this.disLikedCount = response.disLikedCount;
+        this.viewCount = response.viewCount;
       });
   }
 }

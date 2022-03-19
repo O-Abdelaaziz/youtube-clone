@@ -36,7 +36,7 @@ export class SaveVideoDetailsComponent implements OnInit {
   public message: string = '';
   public videoId: string = '';
   public videoUrl: string = '';
-  public thumbnailUrl:string='';
+  public thumbnailUrl: string = '';
 
   constructor(
     private _videoUploadService: VideoUploadService,
@@ -63,7 +63,7 @@ export class SaveVideoDetailsComponent implements OnInit {
       .subscribe((response) => {
         console.log(response);
         this.videoUrl = response.videoUrl;
-        this.thumbnailUrl=response.thumbnailUrl;
+        this.thumbnailUrl = response.thumbnailUrl;
       });
   }
   add(event: MatChipInputEvent): void {
@@ -96,17 +96,20 @@ export class SaveVideoDetailsComponent implements OnInit {
       title: this.videoDetailsFromControls?.['title'].value,
       description: this.videoDetailsFromControls?.['description'].value,
       videoStatus: this.videoDetailsFromControls?.['videoStatus'].value,
-      videoUrl:this.videoUrl,
-      thumbnailUrl:this.thumbnailUrl,
+      videoUrl: this.videoUrl,
+      thumbnailUrl: this.thumbnailUrl,
       tags: this.tags,
+      likedCount: 0,
+      disLikedCount: 0,
+      viewCount: 0,
     };
-    console.log("onSaveVideoDetails vidurl " + this.videoUrl);
-    console.log("onSaveVideoDetails image url" + this.thumbnailUrl);
-    this._videoUploadService.saveVideoDetails(videoMetaData).subscribe(
-      (response)=>{
-        this.openSnackBar("Video details updated successfully","OK");
-      }
-    )
+    console.log('onSaveVideoDetails vidurl ' + this.videoUrl);
+    console.log('onSaveVideoDetails image url' + this.thumbnailUrl);
+    this._videoUploadService
+      .saveVideoDetails(videoMetaData)
+      .subscribe((response) => {
+        this.openSnackBar('Video details updated successfully', 'OK');
+      });
   }
 
   onFileSelected($event: Event) {
@@ -131,8 +134,8 @@ export class SaveVideoDetailsComponent implements OnInit {
     this._videoUploadService
       .uploadThumbnail(this.selectedFile!, this.videoId)
       .subscribe((response) => {
-        this.thumbnailUrl=response;
-        console.log('show an upload success notification'+response);
+        this.thumbnailUrl = response;
+        console.log('show an upload success notification' + response);
         this.openSnackBar('The thumbnail uploaded successfully.', 'OK');
       });
   }
