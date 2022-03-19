@@ -45,7 +45,7 @@ export class VideoUploadService {
     return this._httpClient.put<VideoDto>(`${this.baseUrl}/videos/update-video`,videoDto);
   }
 
-  // sign up in auth0
-  // create youtube-clone-client (spa)
-  // create youtube-clone-server (api)
+  public getAllVideos():Observable<Array<VideoDto>>{
+    return this._httpClient.get<Array<VideoDto>> (`${this.baseUrl}/videos`)
+  }
 }
