@@ -31,6 +31,11 @@ import { AuthConfigModule } from './auth/auth-config.module';
 import { AuthInterceptor, AuthModule } from 'angular-auth-oidc-client';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { VideoDetailsComponent } from './components/video-details/video-details.component';
+import { HomeComponent } from './components/home/home.component';
+import { HistoryComponent } from './components/history/history.component';
+import { SubscriptionComponent } from './components/subscription/subscription.component';
+import { LikedVideosComponent } from './components/liked-videos/liked-videos.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +46,11 @@ import { VideoDetailsComponent } from './components/video-details/video-details.
     VideoPlayerComponent,
     UnauthorizedComponent,
     VideoDetailsComponent,
+    HomeComponent,
+    HistoryComponent,
+    SubscriptionComponent,
+    LikedVideosComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,
