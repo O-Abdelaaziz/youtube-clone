@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { FeaturedComponent } from './components/featured/featured.component';
 import { HistoryComponent } from './components/history/history.component';
 import { HomeComponent } from './components/home/home.component';
 import { LikedVideosComponent } from './components/liked-videos/liked-videos.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
     children: [
+      { path: '', component: FeaturedComponent },
       { path: 'history', component: HistoryComponent },
       { path: 'subscriptions', component: SubscriptionComponent },
       { path: 'liked-videos', component: LikedVideosComponent },
