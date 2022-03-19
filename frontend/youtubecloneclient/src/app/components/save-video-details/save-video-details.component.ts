@@ -61,8 +61,8 @@ export class SaveVideoDetailsComponent implements OnInit {
     this._videoUploadService
       .getVideoDetails(this.videoId)
       .subscribe((response) => {
+        console.log(response);
         this.videoUrl = response.videoUrl;
-        console.log(this.videoUrl);
         this.thumbnailUrl=response.thumbnailUrl;
       });
   }
@@ -100,7 +100,8 @@ export class SaveVideoDetailsComponent implements OnInit {
       thumbnailUrl:this.thumbnailUrl,
       tags: this.tags,
     };
-
+    console.log("onSaveVideoDetails vidurl " + this.videoUrl);
+    console.log("onSaveVideoDetails image url" + this.thumbnailUrl);
     this._videoUploadService.saveVideoDetails(videoMetaData).subscribe(
       (response)=>{
         this.openSnackBar("Video details updated successfully","OK");
@@ -130,7 +131,8 @@ export class SaveVideoDetailsComponent implements OnInit {
     this._videoUploadService
       .uploadThumbnail(this.selectedFile!, this.videoId)
       .subscribe((response) => {
-        console.log('show an upload success notification');
+        this.thumbnailUrl=response;
+        console.log('show an upload success notification'+response);
         this.openSnackBar('The thumbnail uploaded successfully.', 'OK');
       });
   }

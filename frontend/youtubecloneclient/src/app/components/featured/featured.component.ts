@@ -19,6 +19,8 @@ export class FeaturedComponent implements OnInit {
   onGetVideos() {
     this._videoService.getAllVideos().subscribe((response) => {
       this.featuredVideos = response;
+      console.log(response);
+
     });
   }
 }
