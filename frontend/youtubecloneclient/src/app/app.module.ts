@@ -21,6 +21,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
+import {MatCardModule} from '@angular/material/card';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -39,6 +40,7 @@ import { SubscriptionComponent } from './components/subscription/subscription.co
 import { LikedVideosComponent } from './components/liked-videos/liked-videos.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FeaturedComponent } from './components/featured/featured.component';
+import { VideoCardComponent } from './components/video-card/video-card.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,7 @@ import { FeaturedComponent } from './components/featured/featured.component';
     LikedVideosComponent,
     SidebarComponent,
     FeaturedComponent,
+    VideoCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,6 +78,7 @@ import { FeaturedComponent } from './components/featured/featured.component';
     MatSnackBarModule,
     MatSidenavModule,
     MatListModule,
+    MatCardModule,
     FlexLayoutModule,
     VgCoreModule,
     VgControlsModule,
