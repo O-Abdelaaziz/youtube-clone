@@ -19,6 +19,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -69,6 +71,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     MatOptionModule,
     MatChipsModule,
     MatSnackBarModule,
+    MatSidenavModule,
+    MatListModule,
     FlexLayoutModule,
     VgCoreModule,
     VgControlsModule,
