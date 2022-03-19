@@ -62,6 +62,7 @@ export class SaveVideoDetailsComponent implements OnInit {
       .getVideoDetails(this.videoId)
       .subscribe((response) => {
         this.videoUrl = response.videoUrl;
+        console.log(this.videoUrl);
         this.thumbnailUrl=response.thumbnailUrl;
       });
   }
