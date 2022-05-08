@@ -22,6 +22,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
+import {MatMenuModule} from '@angular/material/menu';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -83,6 +84,7 @@ import { CommentsComponent } from './components/comments/comments.component';
     MatSidenavModule,
     MatListModule,
     MatCardModule,
+    MatMenuModule,
     FlexLayoutModule,
     VgCoreModule,
     VgControlsModule,

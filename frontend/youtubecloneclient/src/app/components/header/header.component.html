@@ -2,18 +2,32 @@
   <mat-toolbar-row>
     <span>Youtube Clone</span>
     <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon favorite-icon">
+    <button mat-icon-button class="example-icon favorite-icon" routerLink="/upload-video">
       <mat-icon>video_call</mat-icon>
     </button>
-    <button mat-icon-button class="example-icon" *ngIf="isAuthenticated; else noAuth">
+    <button
+      *ngIf="isAuthenticated; else noAuth"
+      [matMenuTriggerFor]="menu"
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with share icon"
+    >
       <mat-icon>account_circle</mat-icon>
     </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logOff()">Logout</button>
+    </mat-menu>
     <ng-template #noAuth>
       <button mat-icon-button class="example-icon" (click)="onLogin()">
         <mat-icon>login</mat-icon>
       </button>
     </ng-template>
-    <button mat-icon-button class="example-icon" (click)="onLogout()" *ngIf="isAuthenticated" >
+    <button
+      mat-icon-button
+      class="example-icon"
+      (click)="onLogout()"
+      *ngIf="isAuthenticated"
+    >
       <mat-icon>logout</mat-icon>
     </button>
   </mat-toolbar-row>
