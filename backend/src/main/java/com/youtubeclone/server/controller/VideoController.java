@@ -50,7 +50,7 @@ public class VideoController {
     @ResponseStatus(HttpStatus.OK)
     public VideoRequest likeVideo(@PathVariable("videoId") String videoId) {
         return iVideoService.likeVideo(videoId);
-    }
+    }git status
 
     @PostMapping("/{videoId}/dislike")
     @ResponseStatus(HttpStatus.OK)

@@ -31,12 +31,10 @@ export class UserService {
       .get(`${this.baseUrl}/users/register`, { responseType: 'text' })
       .subscribe((response) => {
         this.userId = response;
-        console.log('response user service:' + response);
       });
   }
 
   public getUserId(): string {
-    console.log('userid user service:' + this.userId);
     return this.userId;
   }
 }

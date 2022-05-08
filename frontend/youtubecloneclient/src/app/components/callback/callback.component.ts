@@ -11,8 +11,6 @@ export class CallbackComponent implements OnInit {
   constructor(private _userService: UserService,
               private _router:Router) {
     this._userService.registerUser();
-    console.log("callback user id: "+this._userService.getUserId());
-
     this._router.navigateByUrl('');
   }
 
