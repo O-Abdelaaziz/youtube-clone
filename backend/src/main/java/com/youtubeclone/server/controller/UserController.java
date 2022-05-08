@@ -24,18 +24,17 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public String register(Authentication authentication) {
         Jwt jwt = (Jwt) authentication.getPrincipal();
-        iUserService.registerUser(jwt.getTokenValue());
-        return "User registred successfuly";
+        return iUserService.registerUser(jwt.getTokenValue());
     }
 
-    @GetMapping("/subscribe/{userId}")
+    @PostMapping("/subscribe/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public boolean subscribeUser(@PathVariable("userId") String userId) {
         iUserService.subscribeUser(userId);
         return true;
     }
 
-    @GetMapping("/unsubscribe/{userId}")
+    @PostMapping("/unsubscribe/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public boolean unSubscribeUser(@PathVariable("userId") String userId) {
         iUserService.unSubscribeUser(userId);

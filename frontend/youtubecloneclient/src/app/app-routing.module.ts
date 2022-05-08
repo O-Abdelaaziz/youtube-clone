@@ -10,6 +10,7 @@ import { SubscriptionComponent } from './components/subscription/subscription.co
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { UploadVideoComponent } from './components/upload-video/upload-video.component';
 import { VideoDetailsComponent } from './components/video-details/video-details.component';
+import { CallbackComponent } from './components/callback/callback.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'upload-video', component: UploadVideoComponent },
   { path: 'save-video-details/:id', component: SaveVideoDetailsComponent },
   { path: 'video-details/:id', component: VideoDetailsComponent },
+  { path: 'callback', component: CallbackComponent },
 
   { path: 'unauthorized', component: UnauthorizedComponent },
 ];

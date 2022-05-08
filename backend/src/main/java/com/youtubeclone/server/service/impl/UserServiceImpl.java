@@ -18,6 +18,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Optional;
 import java.util.Set;
 
 
@@ -36,7 +37,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void registerUser(String tokenValue) {
+    public String registerUser(String tokenValue) {
 
         HttpRequest httpRequest = HttpRequest.newBuilder()
                 .GET()
@@ -57,14 +58,22 @@ public class UserServiceImpl implements IUserService {
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             UserInfoRequest userInfoDTO = objectMapper.readValue(body, UserInfoRequest.class);
 
-            User user = new User();
-            user.setFirstName(userInfoDTO.getGivenName());
-            user.setLastName(userInfoDTO.getFamilyName());
-            user.setFullName(userInfoDTO.getName());
-            user.setEmailAddress(userInfoDTO.getEmail());
-            user.setSub(userInfoDTO.getSub());
+            Optional<User> userBySubject = userRepository.findBySub(userInfoDTO.getSub());
 
-            userRepository.save(user);
+            if (userBySubject.isPresent()) {
+                return userBySubject.get().getId();
+            } else {
+
+                User user = new User();
+                user.setFirstName(userInfoDTO.getGivenName());
+                user.setLastName(userInfoDTO.getFamilyName());
+                user.setFullName(userInfoDTO.getName());
+                user.setEmailAddress(userInfoDTO.getEmail());
+                user.setSub(userInfoDTO.getSub());
+
+                User savedUser = userRepository.save(user);
+                return savedUser.getId();
+            }
 
         } catch (Exception exception) {
             throw new RuntimeException("Exception occurred while registering user", exception);

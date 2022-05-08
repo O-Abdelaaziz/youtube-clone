@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 import { VideoUploadService } from 'src/app/services/video-upload.service';
 
 @Component({
@@ -19,9 +20,10 @@ export class VideoDetailsComponent implements OnInit {
   viewCount: number = 0;
   showSubscribeButton: boolean = true;
   showUnSubscribeButton: boolean = false;
-  
+
   constructor(
     private _videoUploadService: VideoUploadService,
+    private _userService: UserService,
     private _activatedRoute: ActivatedRoute
   ) {
     this.videoId = this._activatedRoute.snapshot.params['id'];
@@ -72,14 +74,28 @@ export class VideoDetailsComponent implements OnInit {
    * subscribeToUser
    */
   public subscribeToUser() {
-    
+    const userId=this._userService.getUserId();
+    console.log("userid: "+userId);
+
+    this._userService.subscribeToUser(userId)
+    .subscribe(
+      (response)=>{
+        this.showUnSubscribeButton=response;
+        this.showSubscribeButton=false
+      });
   }
 
   /**
    * unSubscribeToUser
    */
   public unSubscribeToUser() {
-    
+    const userId=this._userService.getUserId();
+    this._userService.unSubscribeToUser(userId)
+    .subscribe(
+      (response)=>{
+        this.showSubscribeButton=response;
+        this.showUnSubscribeButton=false
+      });
   }
 
 }

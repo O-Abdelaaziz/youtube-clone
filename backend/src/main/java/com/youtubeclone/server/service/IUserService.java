@@ -6,7 +6,7 @@ import java.util.Set;
 
 public interface IUserService {
 
-    public void registerUser(String tokenValue);
+    public String registerUser(String tokenValue);
 
     public User getCurrentUser();
 

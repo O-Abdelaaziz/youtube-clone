@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
     AuthModule.forRoot({
       config: {
         authority: 'https://o-abdelaaziz.us.auth0.com',
-        redirectUrl: window.location.origin,
+        redirectUrl: window.location.origin+'/callback',
         postLogoutRedirectUri: window.location.origin,
         clientId: environment.env.CLIENT_ID,
         scope: 'openid profile offline_access email',
