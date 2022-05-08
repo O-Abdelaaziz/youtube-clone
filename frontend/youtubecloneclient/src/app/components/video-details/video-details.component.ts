@@ -17,6 +17,9 @@ export class VideoDetailsComponent implements OnInit {
   likedCount: number = 0;
   disLikedCount: number = 0;
   viewCount: number = 0;
+  showSubscribeButton: boolean = true;
+  showUnSubscribeButton: boolean = false;
+  
   constructor(
     private _videoUploadService: VideoUploadService,
     private _activatedRoute: ActivatedRoute
@@ -42,4 +45,41 @@ export class VideoDetailsComponent implements OnInit {
         this.viewCount = response.viewCount;
       });
   }
+
+  /**
+   * likeVideo
+   */
+  public likeVideo() {
+    this._videoUploadService.likeVideo(this.videoId)
+    .subscribe((response)=>{
+      this.likedCount=response.likedCount;
+      this.disLikedCount=response.disLikedCount;
+    });
+  }
+
+  /**
+   * disLikeVideo
+   */
+  public disLikeVideo() {
+    this._videoUploadService.dislikeVideo(this.videoId)
+    .subscribe((response)=>{
+      this.likedCount=response.likedCount;
+      this.disLikedCount=response.disLikedCount;
+    });
+  }
+
+  /**
+   * subscribeToUser
+   */
+  public subscribeToUser() {
+    
+  }
+
+  /**
+   * unSubscribeToUser
+   */
+  public unSubscribeToUser() {
+    
+  }
+
 }

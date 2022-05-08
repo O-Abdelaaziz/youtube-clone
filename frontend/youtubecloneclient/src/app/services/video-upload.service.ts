@@ -48,4 +48,12 @@ export class VideoUploadService {
   public getAllVideos():Observable<Array<VideoDto>>{
     return this._httpClient.get<Array<VideoDto>> (`${this.baseUrl}/videos`)
   }
+
+  public likeVideo(videoId:string): Observable<VideoDto>{
+    return this._httpClient.post<VideoDto>(`${this.baseUrl}/videos/${videoId}/like`,null);
+  }
+
+  public dislikeVideo(videoId:string): Observable<VideoDto>{
+    return this._httpClient.post<VideoDto>(`${this.baseUrl}/videos/${videoId}/dislike`,null);
+  }
 }
